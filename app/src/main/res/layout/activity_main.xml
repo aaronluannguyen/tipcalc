@@ -20,7 +20,6 @@
         android:hint="Amount"
         android:inputType="numberDecimal"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/tipBtn"
         app:layout_constraintEnd_toStartOf="@+id/tipBtn"
         app:layout_constraintStart_toStartOf="parent"
