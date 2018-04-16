@@ -21,6 +21,6 @@ class MainActivity : AppCompatActivity() {
 
         var tip: Number = total * 0.15
 
-        Toast.makeText(this, "Recommended Tip: $" + tip.toString(), Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Recommended 15% Tip: $" + tip.toString(), Toast.LENGTH_LONG).show()
     }
 }
