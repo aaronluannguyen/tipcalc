@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import java.math.BigDecimal
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,9 +38,8 @@ class MainActivity : AppCompatActivity() {
 
     fun handleTipClick() {
         var total = amount.text.toString().toDouble()
-
-        var tip: Number = total * 0.15
-
-        Toast.makeText(this, "Recommended 15% Tip: $" + tip.toString(), Toast.LENGTH_LONG).show()
+        var tip: Double = total * 0.15
+        var tipRounded = "%.2f".format(tip)
+        Toast.makeText(this, "Recommended 15% Tip: $" + tipRounded, Toast.LENGTH_LONG).show()
     }
 }
