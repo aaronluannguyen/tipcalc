@@ -17,16 +17,17 @@
         android:layout_marginRight="14dp"
         android:layout_marginStart="16dp"
         android:ems="10"
+        android:hint="Amount"
         android:inputType="numberDecimal"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/tipButton"
-        app:layout_constraintEnd_toStartOf="@+id/tipButton"
+        app:layout_constraintBottom_toBottomOf="@+id/tipBtn"
+        app:layout_constraintEnd_toStartOf="@+id/tipBtn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tipButton" />
+        app:layout_constraintTop_toTopOf="@+id/tipBtn" />
 
     <Button
-        android:id="@+id/tipButton"
+        android:id="@+id/tipBtn"
         android:layout_width="118dp"
         android:layout_height="53dp"
         android:layout_marginEnd="22dp"

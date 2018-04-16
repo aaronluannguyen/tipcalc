@@ -2,7 +2,7 @@ package tipcalc.nguyen51.washington.edu
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -10,6 +10,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Button tipButton = (Button)findViewById(R.id.tipButton)
+
+
+        tipBtn.setOnClickListener {
+
+        }
+    }
+
+    fun handleTip(amount: Number) {
+
     }
 }
