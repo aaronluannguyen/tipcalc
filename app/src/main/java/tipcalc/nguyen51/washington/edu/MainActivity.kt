@@ -17,6 +17,11 @@ class MainActivity : AppCompatActivity() {
 
         tipBtn.isClickable = false
 
+        amount.setOnClickListener({
+            var initial = 0.00
+            amount.setText(String.format("$%.2f", initial))
+        })
+
         amount.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -37,15 +42,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun handleTipClick() {
-        var total = amount.text.toString().toDouble()
+        var total = amount.text.toString().substring(1).toDouble()
         var tip: Double = total * 0.15
         var tipRounded = "%.2f".format(tip)
         Toast.makeText(this, "Recommended 15% Tip: $" + tipRounded, Toast.LENGTH_LONG).show()
     }
 
     fun textToMoney(text: Editable): String {
-        var num = text.toString().toDouble()
-        var roundedNumString = "%.2f".format(num)
-        return "$" + roundedNumString
+        if (text.toString().length > 1) {
+            var withoutDollarSign = text.toString().substring(1)
+            var num = withoutDollarSign.toDouble()
+            var roundedNumString = "%.2f".format(num)
+            return "$" + roundedNumString
+        }
+        return ""
     }
 }
