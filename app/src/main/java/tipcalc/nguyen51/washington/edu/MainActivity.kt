@@ -8,31 +8,38 @@ import android.text.TextWatcher
 import android.view.Gravity
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
-import java.math.BigDecimal
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         tipBtn.isClickable = false
 
         amount.setOnClickListener({
             if (amount.text.isEmpty()) {
-                amount.setText("$")
-                amount.setSelection(amount.text.length)
+                defaultMoneySign()
             }
         })
 
         amount.addTextChangedListener(object: TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 tipBtn.isClickable = amount.text.length > 1
             }
 
             override fun afterTextChanged(s: Editable?) {
+                if (amount.text.isEmpty()) {
+                    defaultMoneySign()
+                }
                 when (tipBtn.isClickable) {
                     true -> {
                         tipBtn.setOnClickListener {handleTipClick()}
@@ -55,10 +62,16 @@ class MainActivity : AppCompatActivity() {
 
     fun textToMoney(text: Editable): String {
         if (text.toString().length > 1) {
-            var num = text.toString().substring(1).toDouble()
+            var numTimes100 = text.toString().substring(1).toDouble() * 1000
+            var num = numTimes100 / 100
             var roundedNumString = "%.2f".format(num)
             return "$" + roundedNumString
         }
-        return "$0.00"
+        return "$"
+    }
+
+    fun defaultMoneySign() {
+        amount.setText("$")
+        amount.setSelection(amount.text.length)
     }
 }
