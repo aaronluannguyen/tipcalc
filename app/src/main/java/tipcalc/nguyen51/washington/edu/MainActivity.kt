@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
 
         tipBtn.isClickable = false
+        tipBtn.setBackgroundColor(Color.rgb(169, 169, 169))
 
         amount.setOnClickListener({
             if (amount.text.isEmpty()) {
@@ -40,12 +41,17 @@ class MainActivity : AppCompatActivity() {
                 if (amount.text.isEmpty()) {
                     defaultMoneySign()
                 }
+
+                amount.removeTextChangedListener(this)
+                textToMoney()
+                amount.addTextChangedListener(this)
+
                 when (tipBtn.isClickable) {
                     true -> {
                         tipBtn.setOnClickListener {handleTipClick()}
-                        tipBtn.setBackgroundColor(Color.GREEN)
+                        tipBtn.setBackgroundColor(Color.rgb(50, 205, 50))
                     }
-                    false -> tipBtn.setBackgroundColor(Color.LTGRAY)
+                    false -> tipBtn.setBackgroundColor(Color.rgb(169, 169, 169))
                 }
             }
         })
@@ -60,18 +66,15 @@ class MainActivity : AppCompatActivity() {
         toastMessage.show()
     }
 
-    fun textToMoney(text: Editable): String {
-        if (text.toString().length > 1) {
-            var numTimes100 = text.toString().substring(1).toDouble() * 1000
-            var num = numTimes100 / 100
-            var roundedNumString = "%.2f".format(num)
-            return "$" + roundedNumString
-        }
-        return "$"
+    fun textToMoney() {
+        var num = amount.text.toString().substring(1).toDouble() * 10
+        var roundedNumString = "%.2f".format(num)
+        amount.setText("$" + roundedNumString)
+        amount.setSelection(amount.text.length)
     }
 
     fun defaultMoneySign() {
-        amount.setText("$")
+        amount.setText("$0.00")
         amount.setSelection(amount.text.length)
     }
 }
