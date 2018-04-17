@@ -18,15 +18,17 @@ class MainActivity : AppCompatActivity() {
         tipBtn.isClickable = false
 
         amount.setOnClickListener({
-            var initial = 0.00
-            amount.setText(String.format("$%.2f", initial))
+            if (amount.text.isEmpty()) {
+                amount.setText("$")
+                amount.setSelection(amount.text.length)
+            }
         })
 
         amount.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                tipBtn.isClickable = !amount.text.isEmpty()
+                tipBtn.isClickable = amount.text.length > 1
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -50,11 +52,10 @@ class MainActivity : AppCompatActivity() {
 
     fun textToMoney(text: Editable): String {
         if (text.toString().length > 1) {
-            var withoutDollarSign = text.toString().substring(1)
-            var num = withoutDollarSign.toDouble()
+            var num = text.toString().substring(1).toDouble()
             var roundedNumString = "%.2f".format(num)
             return "$" + roundedNumString
         }
-        return ""
+        return "$0.00"
     }
 }
