@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Gravity
+import android.view.KeyEvent
+import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -19,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+        var backspaceClick = false
         tipBtn.isClickable = false
         tipBtn.setBackgroundColor(Color.rgb(169, 169, 169))
 
@@ -34,18 +37,13 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                tipBtn.isClickable = amount.text.length > 1
+                tipBtn.isClickable = totalIsZero()
+                if (count < before) {
+                    backspaceClick = true
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (amount.text.isEmpty()) {
-                    defaultMoneySign()
-                }
-
-                amount.removeTextChangedListener(this)
-                textToMoney()
-                amount.addTextChangedListener(this)
-
                 when (tipBtn.isClickable) {
                     true -> {
                         tipBtn.setOnClickListener {handleTipClick()}
@@ -53,6 +51,16 @@ class MainActivity : AppCompatActivity() {
                     }
                     false -> tipBtn.setBackgroundColor(Color.rgb(169, 169, 169))
                 }
+
+                amount.removeTextChangedListener(this)
+                when (backspaceClick) {
+                    true -> {
+                        textToMoneyDel()
+                        backspaceClick = false
+                    }
+                    false -> textToMoneyAdd()
+                }
+                amount.addTextChangedListener(this)
             }
         })
     }
@@ -66,11 +74,22 @@ class MainActivity : AppCompatActivity() {
         toastMessage.show()
     }
 
-    fun textToMoney() {
+    fun textToMoneyAdd() {
         var num = amount.text.toString().substring(1).toDouble() * 10
         var roundedNumString = "%.2f".format(num)
         amount.setText("$" + roundedNumString)
         amount.setSelection(amount.text.length)
+    }
+
+    fun textToMoneyDel() {
+        var num = amount.text.toString().substring(1).toDouble() / 10
+        var roundedNumString = "%.2f".format(num)
+        amount.setText("$" + roundedNumString)
+        amount.setSelection(amount.text.length)
+    }
+
+    fun totalIsZero(): Boolean {
+        return (amount.text.toString().substring(1).toDouble() > 0.0)
     }
 
     fun defaultMoneySign() {
