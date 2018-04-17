@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Gravity
-import android.view.KeyEvent
-import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
